@@ -1,0 +1,4 @@
+Customized raspi GPIOS driver is a simple development made in C to learn how a
+linux char device works together with the GPIOs of the raspberry pi 3+.
+
+For usage of this driver read the file INSTALL.

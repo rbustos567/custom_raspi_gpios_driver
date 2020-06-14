@@ -1,0 +1,84 @@
+
+To check raspberry pi 3 GPIOS pins execute the command: pinout
+
+The ones you will use to set here are the numbers that are next to GPIO
+
+Do not use GPIO0 and GPIO1, these are reserved for advanced use.
+
+The ones availables are from GPIO2 to GPIO26
+
+
+
+Building the driver
+-------------------
+
+commands:
+
+cd driver/
+
+make
+
+
+This will create several files. The one required is:
+
+raspi_gpios_device.ko
+
+
+Loading the driver
+------------------
+
+sudo insmod raspi_gpios_device.ko in_gpios=(input gpios) out_gpios=(output gpios)
+
+e.g.
+
+sudo insmod raspi_gpios_device.ko in_gpios=11,14,15 out_gpios=2,4,6
+
+This will create the following device files for input gpios:
+
+/dev/CusRaspiGpio11
+/dev/CusRaspiGpio14
+/dev/CusRaspiGpio15
+
+
+And for output gpios these:
+
+/dev/CusRaspiGpio2
+/dev/CusRaspiGpio4
+/dev/CusRaspiGpio6
+
+
+
+lsmod | grep "raspi_gpios_device"
+
+It should display a line with this driver listed
+
+Checking the logs
+-----------------
+
+dmesg 
+
+This command is used to list the kernel logs
+
+sudo dmesg -C
+
+Cleans the kernel log
+
+
+Unloading the driver
+-------------------
+
+sudo rmmod raspi_gpios_device
+
+
+
+Unbuilding driver
+---------------------
+
+make clean
+
+
+
+references:
+
+https://www.raspberrypi.org/documentation/usage/gpio/
+https://lwn.net/Articles/532714/

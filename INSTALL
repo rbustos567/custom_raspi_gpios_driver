@@ -27,7 +27,7 @@ raspi_gpios_device.ko
 Loading the driver
 ------------------
 
-sudo insmod raspi_gpios_device.ko in_gpios=(input gpios) out_gpios=(output gpios)
+sudo insmod raspi_gpios_device.ko in_gpios=<input1, input2,...,intputn> out_gpios=<output1, output2,...,outputn>
 
 e.g.
 
@@ -52,6 +52,11 @@ lsmod | grep "raspi_gpios_device"
 
 It should display a line with this driver listed
 
+e.g.
+
+raspi_gpios_device     16384  0
+
+
 Checking the logs
 -----------------
 
@@ -64,11 +69,37 @@ sudo dmesg -C
 Cleans the kernel log
 
 
+Testing the driver
+------------------
+
+cd tests/
+
+make
+
+sudo ./user_read_test <GPIO input to read>
+
+sudo ./user_write_test <GPIO output to write> <HIGH or LOW>
+
+
+e.g.
+
+This command will read from GPIO 11 (must be set as input) which will be located: /dev/CusRaspiGpio11
+You will get either: 0 (LOW) or 1 (HIGH)
+ 
+sudo ./user_read_test 11 
+
+
+This command will write 1 to GPIO 2 (must be set as output) which will be located: /dev/CusRaspiGpio2
+You can only set it using either: 0 (LOW) or 1 (HIGH)
+
+sudo ./user_write_test 2 HIGH
+
+
+
 Unloading the driver
 -------------------
 
 sudo rmmod raspi_gpios_device
-
 
 
 Unbuilding driver
